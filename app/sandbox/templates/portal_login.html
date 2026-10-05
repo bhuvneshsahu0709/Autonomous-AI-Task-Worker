@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Sign in · {{ app_name }}{% endblock %}
+{% block body %}
+<h1>Supplier Billing Portal</h1>
+<p class="sub">Sign in to view invoices issued to your organisation.</p>
+
+{% if error %}<div class="banner error" role="alert">{{ error }}</div>{% endif %}
+
+<div class="card" style="max-width:460px">
+  <form method="post" action="/portal/login">
+    <label for="username">Email address</label>
+    <input type="text" id="username" name="username" value="{{ username or '' }}" autocomplete="username">
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" autocomplete="current-password">
+
+    <div class="actions">
+      <button type="submit" class="btn">Sign in</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

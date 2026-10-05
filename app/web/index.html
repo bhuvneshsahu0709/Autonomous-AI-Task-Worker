@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autonomous AI Task Worker — Operator Console</title>
+<link rel="stylesheet" href="/static/styles.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="dot"></span>
+    <h1>Autonomous AI Task Worker</h1>
+  </div>
+  <div class="topbar-meta" id="topbar-meta"></div>
+</header>
+
+<main class="layout">
+
+  <!-- ================= LEFT: control + state ================= -->
+  <section class="col col-left">
+
+    <div class="panel" id="panel-task">
+      <h2>Task</h2>
+      <textarea id="goal" rows="4" placeholder="Describe what you want done, in plain English…"></textarea>
+
+      <div class="examples" id="examples"></div>
+
+      <details class="opts">
+        <summary>Run options</summary>
+        <div class="opts-body">
+          <label class="check">
+            <input type="checkbox" id="allow-human" checked>
+            <span>Let the agent ask me questions</span>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="reset-sandbox" checked>
+            <span>Reset the simulated world first</span>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="scripted">
+            <span>Scripted demo &mdash; no model call
+              <em>(replays a fixed plan for the invoice task through the same runtime)</em></span>
+          </label>
+          <div class="faults">
+            <div class="faults-title">Inject failures</div>
+            <div id="fault-list"></div>
+          </div>
+        </div>
+      </details>
+
+      <div class="actions">
+        <button id="run-btn" class="btn primary">Run task</button>
+        <button id="cancel-btn" class="btn ghost" hidden>Stop</button>
+      </div>
+      <div id="run-error" class="inline-error" hidden></div>
+    </div>
+
+    <div class="panel" id="panel-human" hidden>
+      <h2 class="attention">Needs you</h2>
+      <div id="human-question"></div>
+      <pre id="human-details" class="details-block" hidden></pre>
+      <div id="human-risk" class="risk" hidden></div>
+      <textarea id="human-answer" rows="2" placeholder="Your answer or a note…"></textarea>
+      <div class="actions" id="human-actions"></div>
+    </div>
+
+    <div class="panel" id="panel-facts" hidden>
+      <h2>What the agent has learned <span class="count" id="fact-count"></span></h2>
+      <table class="facts" id="facts"></table>
+    </div>
+
+    <div class="panel" id="panel-result" hidden>
+      <h2>Result</h2>
+      <div id="result-body"></div>
+    </div>
+
+    <div class="panel" id="panel-history">
+      <h2>Previous runs</h2>
+      <div id="history" class="history"></div>
+    </div>
+  </section>
+
+  <!-- ================= RIGHT: live trace ================= -->
+  <section class="col col-right">
+    <div class="trace-head">
+      <h2>Live trace</h2>
+      <div class="trace-stats" id="trace-stats"></div>
+    </div>
+    <div id="timeline" class="timeline">
+      <div class="empty">
+        <p><strong>Nothing running.</strong></p>
+        <p>Give the agent a task on the left. Every decision it makes, every page it
+           sees and every failure it recovers from shows up here as it happens.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="lightbox" class="lightbox" hidden>
+  <img id="lightbox-img" alt="">
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

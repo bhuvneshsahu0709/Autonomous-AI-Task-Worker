@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ invoice.number }} · {{ app_name }}{% endblock %}
+{% block nav %}
+  <a href="/portal/invoices">Invoices</a>
+  <a href="/portal/logout">Sign out</a>
+{% endblock %}
+{% block body %}
+<p class="sub"><a href="/portal/invoices">&larr; Back to invoices</a></p>
+<h1>Invoice {{ invoice.number }}</h1>
+<p class="sub">Issued by {{ invoice.vendor }} to Acme Corp.</p>
+
+<div class="card">
+  <dl class="kv">
+    <dt>Invoice number</dt><dd>{{ invoice.number }}</dd>
+    <dt>Purchase order</dt><dd>{{ invoice.po_number }}</dd>
+    <dt>Issue date</dt><dd>{{ invoice.issue_date }}</dd>
+    <dt>Status</dt><dd><span class="pill {{ invoice.status|lower }}">{{ invoice.status }}</span></dd>
+  </dl>
+
+  <!-- Billing figures sit inside a collapsed <details>. Browsers do not render
+       the contents until it is opened, so the agent must actually interact with
+       the page to observe the amount - it cannot be scraped from the initial
+       page text. -->
+  <details class="billing">
+    <summary>Show billing summary</summary>
+    <div class="body">
+      <h2>Line items</h2>
+      <table>
+        <thead>
+          <tr><th>Description</th><th class="num">Qty</th><th class="num">Unit price</th><th class="num">Line total</th></tr>
+        </thead>
+        <tbody>
+          {% for desc, qty, unit in invoice.line_items %}
+          <tr>
+            <td>{{ desc }}</td>
+            <td class="num">{{ qty }}</td>
+            <td class="num">${{ '%.2f'|format(unit) }}</td>
+            <td class="num">${{ '%.2f'|format(qty * unit) }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <h2>Payment</h2>
+      <dl class="kv">
+        <dt>Total amount due</dt><dd>{{ invoice.amount_display }} {{ invoice.currency }}</dd>
+        <dt>Payment due date</dt><dd>{{ invoice.due_date }}</dd>
+        <dt>Remit to</dt><dd>Northwind Supplies &mdash; Acct 4471 0098</dd>
+      </dl>
+    </div>
+  </details>
+</div>
+{% endblock %}

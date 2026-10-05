@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.pytest_cache/
+.ruff_cache/
+runs/
+
+# The agent's shared workspace is generated at startup by
+# app/sandbox/workspace.py (seed_workspace). It is regenerated on every run, and
+# it contains a file called `credentials.md` holding the sandbox portal
+# password - harmless, but not something to publish in a repo.
+workspace/
+*.log
+.DS_Store

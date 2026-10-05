@@ -56,6 +56,15 @@ One process serves everything:
 | `/finance` | Simulated internal AP system — web UI **and** JSON API |
 | `/api/docs` | Control-plane API |
 
+<p align="center">
+  <img src="docs/screenshots/portal-invoices.png" width="48%" alt="Vendor portal invoice list">
+  <img src="docs/screenshots/finance-form.png" width="48%" alt="Internal AP entry form">
+</p>
+
+*The two systems the agent works across: an external vendor portal it must sign
+in to, and our internal AP system. Both are real server-rendered apps with real
+validation — the agent drives them through Chromium exactly as a person would.*
+
 ---
 
 ## What to look at in a demo
@@ -75,6 +84,11 @@ Run the first example task and watch the right-hand trace. Five moments matter:
    clicks to reveal it.
 5. **It reads its own error and fixes itself.** It submits `$12,480.00`, the form
    rejects it, and it re-submits `12480.00`.
+
+![Verified result](docs/screenshots/console-result.png)
+
+*The end state: a verdict, and a claim-by-claim table of what the agent said
+versus what the finance system actually contains.*
 
 Then the part I care about most: **the run does not end when the agent says it's
 done.** `finish` submits *claims*. A separate verifier — different system
@@ -346,5 +360,3 @@ Third-party components are the model, the browser driver and the web framework.
 The agent loop, planner interface, tool layer, page-snapshot algorithm, approval
 policy, guardrails, verification pass, evidence bundle, simulated world and
 console are all written for this project.
-#   A u t o n o m o u s - A I - T a s k - W o r k e r  
- 

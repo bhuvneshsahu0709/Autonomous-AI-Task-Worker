@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ app_name }}{% endblock %}</title>
+<style>
+  :root {
+    --brand: {{ brand_color }};
+    --ink: #10151c;
+    --muted: #5b6676;
+    --line: #dfe4ec;
+    --bg: #f4f6fa;
+    --ok: #0f7b4f;
+    --warn: #8a5a00;
+    --err: #b3261e;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.55 "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  header.app {
+    background: var(--brand); color: #fff; padding: 14px 28px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  header.app .logo { font-weight: 700; letter-spacing: .2px; font-size: 17px; }
+  header.app nav { display: flex; gap: 16px; margin-left: auto; }
+  header.app nav a { color: #fff; text-decoration: none; opacity: .9; font-size: 14px; }
+  header.app nav a:hover { opacity: 1; text-decoration: underline; }
+  main { max-width: 980px; margin: 28px auto 60px; padding: 0 24px; }
+  h1 { font-size: 23px; margin: 0 0 6px; }
+  h2 { font-size: 17px; margin: 28px 0 10px; }
+  .sub { color: var(--muted); margin: 0 0 22px; font-size: 14px; }
+  .card {
+    background: #fff; border: 1px solid var(--line); border-radius: 10px;
+    padding: 22px; box-shadow: 0 1px 2px rgba(16,21,28,.04);
+  }
+  table { width: 100%; border-collapse: collapse; background: #fff; }
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); background: #fafbfd; }
+  tbody tr:hover { background: #f8fafd; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  a { color: var(--brand); }
+  label { display: block; font-weight: 600; font-size: 13px; margin: 16px 0 5px; }
+  .hint { font-weight: 400; color: var(--muted); font-size: 12px; }
+  input[type=text], input[type=password], textarea, select {
+    width: 100%; padding: 9px 11px; border: 1px solid #c3cbd8;
+    border-radius: 6px; font: inherit; background: #fff;
+  }
+  input:focus, textarea:focus { outline: 2px solid var(--brand); outline-offset: -1px; }
+  .btn {
+    background: var(--brand); color: #fff; border: 0; border-radius: 6px;
+    padding: 10px 20px; font: inherit; font-weight: 600; cursor: pointer;
+  }
+  .btn.secondary { background: #fff; color: var(--ink); border: 1px solid #c3cbd8; }
+  .actions { margin-top: 24px; display: flex; gap: 10px; }
+  .pill { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .pill.open { background: #fff3d6; color: var(--warn); }
+  .pill.paid { background: #e2f3ea; color: var(--ok); }
+  .banner { padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; }
+  .banner.error { background: #fdecea; border: 1px solid #f3c4c0; color: var(--err); }
+  .banner.ok { background: #e7f5ee; border: 1px solid #b7e0cb; color: var(--ok); }
+  .field-error { color: var(--err); font-size: 13px; margin-top: 5px; font-weight: 600; }
+  dl.kv { display: grid; grid-template-columns: 190px 1fr; gap: 10px 18px; margin: 0; }
+  dl.kv dt { color: var(--muted); font-size: 13px; }
+  dl.kv dd { margin: 0; font-weight: 600; }
+  details.billing { border: 1px solid var(--line); border-radius: 8px; padding: 0; margin-top: 18px; background:#fff; }
+  details.billing > summary {
+    cursor: pointer; padding: 13px 16px; font-weight: 600; list-style: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  details.billing > summary::before { content: "▸"; color: var(--muted); }
+  details.billing[open] > summary::before { content: "▾"; }
+  details.billing .body { padding: 0 16px 18px; border-top: 1px solid var(--line); }
+  footer { color: var(--muted); font-size: 12px; margin-top: 34px; }
+</style>
+</head>
+<body>
+<header class="app">
+  <span class="logo">{{ app_name }}</span>
+  <nav>{% block nav %}{% endblock %}</nav>
+</header>
+<main>
+{% block body %}{% endblock %}
+<footer>Simulated environment for the Autonomous AI Task Worker prototype. No real data.</footer>
+</main>
+</body>
+</html>

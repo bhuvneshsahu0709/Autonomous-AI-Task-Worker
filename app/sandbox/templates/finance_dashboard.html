@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Accounts Payable · {{ app_name }}{% endblock %}
+{% block nav %}
+  <a href="/finance">AP entries</a>
+  <a href="/finance/entries/new">New entry</a>
+{% endblock %}
+{% block body %}
+<h1>Accounts Payable</h1>
+<p class="sub">{{ entries|length }} entr{{ 'y' if entries|length == 1 else 'ies' }} recorded. Also available as JSON at <code>/finance/api/entries</code>.</p>
+
+{% if created %}
+<div class="banner ok" role="status">
+  AP entry #{{ created.id }} recorded for invoice {{ created.invoice_number }}.
+</div>
+{% endif %}
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Vendor</th>
+      <th>Invoice</th>
+      <th class="num">Amount (USD)</th>
+      <th>Due date</th>
+      <th>Entered by</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for e in entries %}
+    <tr>
+      <td>{{ e.id }}</td>
+      <td>{{ e.vendor }}</td>
+      <td>{{ e.invoice_number }}</td>
+      <td class="num">{{ '%.2f'|format(e.amount) }}</td>
+      <td>{{ e.due_date }}</td>
+      <td>{{ e.created_by }}</td>
+      <td>{{ e.notes }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="actions">
+  <a class="btn" href="/finance/entries/new">Record new AP entry</a>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Invoices · {{ app_name }}{% endblock %}
+{% block nav %}
+  <a href="/portal/invoices">Invoices</a>
+  <a href="/portal/logout">Sign out</a>
+{% endblock %}
+{% block body %}
+<h1>Invoices issued to Acme Corp</h1>
+<p class="sub">
+  Listed by invoice number &mdash; {{ invoices|length }} on file.
+  Issue dates are not necessarily in invoice-number order: re-issued documents
+  keep their original number. Open an invoice to see billing details.
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Invoice</th>
+      <th>Purchase order</th>
+      <th>Issue date</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for inv in invoices %}
+    <tr>
+      <td>{{ inv.number }}</td>
+      <td>{{ inv.po_number }}</td>
+      <td>{{ inv.issue_date }}</td>
+      <td><span class="pill {{ inv.status|lower }}">{{ inv.status }}</span></td>
+      <td><a href="/portal/invoices/{{ inv.number }}">View invoice</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

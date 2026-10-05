@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}New AP entry · {{ app_name }}{% endblock %}
+{% block nav %}
+  <a href="/finance">AP entries</a>
+  <a href="/finance/entries/new">New entry</a>
+{% endblock %}
+{% block body %}
+<p class="sub"><a href="/finance">&larr; Back to AP entries</a></p>
+<h1>Record a new AP entry</h1>
+<p class="sub">Creates a payable against a supplier invoice.</p>
+
+{% if errors %}
+<div class="banner error" role="alert">
+  The entry was not saved. {{ errors|length }} field(s) need attention:
+  <ul style="margin:8px 0 0 18px">
+    {% for field, msg in errors.items() %}<li><strong>{{ field }}</strong>: {{ msg }}</li>{% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+<div class="card">
+  <form method="post" action="/finance/entries/new">
+    <label for="vendor">Vendor</label>
+    <input type="text" id="vendor" name="vendor" value="{{ form.vendor or '' }}">
+    {% if errors.vendor %}<div class="field-error">{{ errors.vendor }}</div>{% endif %}
+
+    <label for="invoice_number">Invoice number</label>
+    <input type="text" id="invoice_number" name="invoice_number" value="{{ form.invoice_number or '' }}">
+    {% if errors.invoice_number %}<div class="field-error">{{ errors.invoice_number }}</div>{% endif %}
+
+    <label for="amount">Amount <span class="hint">(USD, plain decimal &mdash; no $ sign, no commas)</span></label>
+    <input type="text" id="amount" name="amount" value="{{ form.amount or '' }}">
+    {% if errors.amount %}<div class="field-error">{{ errors.amount }}</div>{% endif %}
+
+    <label for="due_date">Due date <span class="hint">(YYYY-MM-DD)</span></label>
+    <input type="text" id="due_date" name="due_date" value="{{ form.due_date or '' }}">
+    {% if errors.due_date %}<div class="field-error">{{ errors.due_date }}</div>{% endif %}
+
+    <label for="notes">Notes <span class="hint">(optional)</span></label>
+    <textarea id="notes" name="notes" rows="3">{{ form.notes or '' }}</textarea>
+
+    <div class="actions">
+      <button type="submit" class="btn">Save AP entry</button>
+      <a class="btn secondary" href="/finance">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

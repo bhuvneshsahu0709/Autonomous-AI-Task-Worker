@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Temporarily unavailable · {{ app_name }}{% endblock %}
+{% block body %}
+<h1>Service temporarily unavailable</h1>
+<div class="banner error" role="alert">
+  The authentication service is briefly unavailable (HTTP 503). This is usually
+  transient &mdash; please return to the sign-in page and try again.
+</div>
+<div class="card">
+  <p>Reference: NW-AUTH-503. No action is required on your account.</p>
+  <div class="actions">
+    <a class="btn" href="/portal/login">Back to sign in</a>
+  </div>
+</div>
+{% endblock %}
